@@ -11,9 +11,6 @@ public class HSV_Color_Changer : MonoBehaviour
 {
     Vector3 Point;
 
-    public float value = 0.7f;
-    //Color fromHSV = Color.HSVToRGB(hue, saturation, value);
-
     Camera cam;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,14 +22,27 @@ public class HSV_Color_Changer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         //one of the circles will follow your mouse
-        Vector3 pos = Input.mousePosition;
-
+        Vector2 pos = Input.mousePosition;
         Point = Camera.main.ScreenToWorldPoint(pos);
-        float r = Mathf.Abs(Mathf.Sqrt(Point.x * Point.x + Point.y * Point.y)); //calculate the distance from the point to the origin (0, 0)
-        float theta = Mathf.Abs(Mathf.Atan2(Point.y, Point.x)); //calculate the angle from the point to the origin (0, 0) in radians
 
-        cam.backgroundColor = Color.HSVToRGB(theta, r, value);
+        Debug.Log("Point: " + Point);
+        float x = Point.x;
+        float y = Point.y;
+
+        float r = Mathf.Sqrt((x * x) + (y * y));
+
+        r = Mathf.Clamp01(r / 10); 
+
+        float theta = Mathf.Atan2(y, x) * Mathf.Deg2Rad;
+
+        Debug.Log("Theta: " + theta + " R: " + r);
+
+
+        cam.backgroundColor = Color.HSVToRGB(theta, r, 1);
+
+
 
     }
 }
