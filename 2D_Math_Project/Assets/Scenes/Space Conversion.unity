@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04531e452e9b20244bc73f3a70fb3550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localSpacePoint: {x: 9.8, y: 11.93}
+  localSpacePoint: {x: 2, y: 2}
 --- !u!4 &244257183
 Transform:
   m_ObjectHideFlags: 0

@@ -26,7 +26,7 @@ public class SpaceConversion : MonoBehaviour
             Vector2 offset = Lpoint.x * transform.right + Lpoint.y * transform.up;
             return (Vector2)transform.position + offset;
         }
-        Vector2 worldPoint = LocalSpaceToWorld(localSpacePoint);
+        Vector3 worldPoint = LocalSpaceToWorld(localSpacePoint);
 
         //drawing local point without conversion
         Gizmos.color = Color.magenta;
@@ -39,15 +39,16 @@ public class SpaceConversion : MonoBehaviour
 
 
         //World space to local space conversion
-        Vector2 WorldSpaceToLocal(Vector2 WPoint)
+        Vector2 WorldSpaceToLocal(Vector3 WPoint)
         {
-            float dot = Vector2.Dot(localSpacePoint, WPoint);
-            //Vector2 point = dot * transform.right + dot * transform.up;
-            Vector2 point = dot * WPoint;
+            Vector3 offset = WPoint - transform.position;
+            float localX = Vector3.Dot(offset, transform.right);
+            float localY = Vector3.Dot(offset, transform.up);
+            Vector3 NewLocalSpace = new Vector3(localX, localY, 0);
 
+            //return new local space
+            return (Vector3)NewLocalSpace;
 
-            Vector2 offset = -transform.right * WPoint.x - transform.up * WPoint.y;
-            return (Vector2)transform.position + offset;
         }
         Vector2 localPoint = WorldSpaceToLocal(worldPoint);
 
@@ -56,9 +57,6 @@ public class SpaceConversion : MonoBehaviour
         Gizmos.DrawSphere(localPoint, 0.1f);
 
         Debug.Log("Local Point: " + localSpacePoint + " World Point: " + worldPoint + " Converted Local Point: " + localPoint);
-
-
-
 
     }
 }
